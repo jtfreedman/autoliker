@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
+email = input('Enter email: ')
+password = input('Enter password: ')
 # instantiates firefox
 browser = webdriver.Firefox()
 browser.implicitly_wait(5)
@@ -16,8 +18,8 @@ browser.get('https://creator.nightcafe.studio/feed')
 
 # clicks on login by password and logs in
 WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Connect with password']"))).click()
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//*[@id='email']"))).send_keys('USERNAME')
-WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//*[@id='password']"))).send_keys('PASSWORD')
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//*[@id='email']"))).send_keys(email)
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//*[@id='password']"))).send_keys(password)
 WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Log in']"))).click()
 
 # waits for page to load and then navigates to feed
