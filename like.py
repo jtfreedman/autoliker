@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import os
+import random
 from time import sleep
-from selenium import webdriver
 from dotenv import load_dotenv
 
+from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -58,5 +59,9 @@ WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//a[tex
 # continually likes posts so long as there is a visible like button
 sleep(3)
 while (2 > 1):
-  WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
-  sleep(.75)
+  try:
+    WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
+  except:
+    browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
+      
+  sleep(random.uniform(.7, 1))
