@@ -9,28 +9,32 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 # get credentials
-runType = input("Use env file for credentials? (y/n)").lower()
-if runType[0] == 'y':
-  load_dotenv()
-  email = os.getenv('EMAIL')
-  password = os.getenv('PASSWORD')
-  userBrowser = os.getenv('BROWSER')
-else:
-  email = input('Enter email: ')
-  password = input('Enter password: ')
-  userBrowser = input('Enter your browser: ').lower()
+runMenu = True
+while runMenu:
+  runType = input("Use env file for credentials? (y/n) ").lower()
+  if runType[0] == 'y':
+    load_dotenv()
+    email = os.getenv('EMAIL')
+    password = os.getenv('PASSWORD')
+    userBrowser = os.getenv('BROWSER')
+  else:
+    email = input('Enter email: ')
+    password = input('Enter password: ')
+    userBrowser = input('Enter your browser: ').lower()
 
-# instantiates browser
-match userBrowser:
-  case 'firefox':
-    browser = webdriver.Firefox()
-  case 'safari':
-    browser = webdriver.Safari()
-  case 'chrome':
-    browser = webdriver.Chrome()
-  case _:
-    print('Your input is not compatibile.')
-    quit()
+  # instantiates browser
+  match userBrowser:
+    case 'firefox':
+      browser = webdriver.Firefox()
+      runMenu = False
+    case 'safari':
+      browser = webdriver.Safari()
+      runMenu = False
+    case 'chrome':
+      browser = webdriver.Chrome()
+      runMenu = False
+    case _:
+      print('Please choose between Firefox, Safari or Chrome.')
 
 browser.implicitly_wait(5)
 
@@ -46,7 +50,6 @@ WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//span[
 # waits for page to load and then navigates to specific feed
 sleep(3)
 browser.get('https://creator.nightcafe.studio/explore')
-sleep(3)
 
 # selects newests posts 
 WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Top: Last Hour']"))).click()
