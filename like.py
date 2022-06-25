@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
+import os
 from time import sleep
 from selenium import webdriver
+from dotenv import load_dotenv
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 # get credentials
-email = input('Enter email: ')
-password = input('Enter password: ')
-userBrowser = input('Enter your browser: ').lower()
+runType = input("Use env file for credentials? (y/n)").lower()
+if runType[0] == 'y':
+  load_dotenv()
+  email = os.getenv('EMAIL')
+  password = os.getenv('PASSWORD')
+  userBrowser = os.getenv('BROWSER')
+else:
+  email = input('Enter email: ')
+  password = input('Enter password: ')
+  userBrowser = input('Enter your browser: ').lower()
 
 # instantiates browser
 match userBrowser:
