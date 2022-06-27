@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from operator import index
 import os
 import random
 import pick
