@@ -23,7 +23,7 @@ while runMenu:
     email = input('Enter email: ')
     password = input('Enter password: ')
     userBrowser = input('Enter your browser: ').lower()
-    programChoice = input('Enter L for likes, F for follows: ')
+    programChoice = input('Enter L for likes, F for follows: ').lower()
 
   # instantiates browser
   match userBrowser:
