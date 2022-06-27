@@ -18,10 +18,12 @@ while runMenu:
     email = os.getenv('EMAIL')
     password = os.getenv('PASSWORD')
     userBrowser = os.getenv('BROWSER')
+    programChoice = os.getenv('PROG_CHOICE')
   else:
     email = input('Enter email: ')
     password = input('Enter password: ')
     userBrowser = input('Enter your browser: ').lower()
+    programChoice = input('Enter L for likes, F for follows: ')
 
   # instantiates browser
   match userBrowser:
@@ -58,10 +60,18 @@ WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//a[tex
 
 # continually likes posts so long as there is a visible like button
 sleep(3)
-while (2 > 1):
-  try:
-    WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
-  except:
-    browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
-      
-  sleep(random.uniform(.7, 1))
+match programChoice:
+  case 'l':
+    while True:
+      try:
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
+      except:
+        browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
+      sleep(random.uniform(.7, 1))
+  case 'f':
+    while True:
+      try:
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Follow']"))).click()
+      except:
+        browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
+      sleep(random.uniform(.7, 1))
