@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+from operator import index
 import os
 import random
+import pick
 from time import sleep
 from dotenv import load_dotenv
 
@@ -20,13 +22,15 @@ while runMenu:
     userBrowser = os.getenv('BROWSER')
     programChoice = os.getenv('PROG_CHOICE')
   else:
+    browserCoices = ["Safari", "Firefox", "Chrome"]
+    programChoices = ["Like", "Follow", "Like & Follow"]
     email = input('Enter email: ')
     password = input('Enter password: ')
-    userBrowser = input('Enter your browser: ').lower()
-    programChoice = input('Enter L for likes, F for follows: ').lower()
+    userBrowser, index = pick.pick(browserCoices, "Please choose between Firefox, Safari or Chrome: ", indicator='=>', default_index=0)
+    programChoice, index = pick.pick(programChoices, "Please select the action: ", indicator='=>', default_index=0)
 
   # instantiates browser
-  match userBrowser:
+  match userBrowser.lower():
     case 'firefox':
       browser = webdriver.Firefox()
       runMenu = False
@@ -60,15 +64,15 @@ WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, f"//a[tex
 
 # continually likes posts so long as there is a visible like button
 sleep(3)
-match programChoice:
-  case 'l':
+match programChoice.lower():
+  case 'like':
     while True:
       try:
         WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
       except:
         browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
       sleep(random.uniform(.7, 1))
-  case 'f':
+  case 'follow':
     while True:
       try:
         WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Follow']"))).click()
