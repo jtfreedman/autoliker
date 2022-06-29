@@ -78,3 +78,17 @@ match programChoice.lower():
       except:
         browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
       sleep(random.uniform(.7, 1))
+  case 'like & follow':
+    while True:
+      try:
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//button[@title='Like']"))).click()
+      except:
+        try:
+          WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Follow']"))).click()
+        except:
+          browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
+      try:
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='Follow']"))).click()
+      except:
+        browser.execute_script("window.scrollTo(0,document.body.scrollHeight);")
+      sleep(random.uniform(.7, 1))
